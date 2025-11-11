@@ -15,7 +15,7 @@
   --foreground: 10 10 10;
   
   /* You can also add brand colors here */
-  /* --primary: 79 70 229; */
+  --primary: 59 130 246; /* This is your light smart blue */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -23,7 +23,8 @@
     --background: 10 10 10;
     --foreground: 237 237 237;
     
-    /* --primary: 99 102 241; */
+    /* You can also add brand colors here */
+    --primary: 96 165 250; /* This is the dark mode version */
   }
 }
 
