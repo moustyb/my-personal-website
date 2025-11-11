@@ -1,26 +1,69 @@
-@import "tailwindcss";
+/*
+  Use the standard @tailwind directives instead of @import.
+  This ensures Tailwind's styles are loaded in the correct order.
+*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
+/*
+  These are your variable definitions. 
+  They are correct. The tailwind.config.ts file will read these.
+*/
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: 255 255 255; /* Use RGB values for opacity support */
+  --foreground: 10 10 10;
+  
+  /* You can also add brand colors here */
+  /* --primary: 79 70 229; */
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: 10 10 10;
+    --foreground: 237 237 237;
+    
+    /* --primary: 99 102 241; */
+  }
+}
+
+/*
+  Use @layer base to apply custom styles to base elements like 'body'.
+  This ensures they work *with* Tailwind, not *against* it.
+*/
+@layer base {
+  body {
+    /* 1. This connects to your tailwind.config.ts.
+      Tailwind classes like `bg-background` and `text-foreground`
+      will now automatically use your CSS variables.
+    */
+    background-color: rgb(var(--background));
+    color: rgb(var(--foreground));
+
+    /* 2. THIS IS THE FONT FIX: 
+      Instead of 'Arial', we tell it to use the '--font-sans'
+      variable, which you set in layout.tsx (Geist).
+    */
+    font-family: var(--font-sans), sans-serif;
+
+    /* 3. THIS IS THE "BETTER AUTO BACKGROUND CHANGE":
+      This adds a smooth 150ms animation when you
+      switch from light to dark mode.
+    */
+    transition-property: color, background-color;
+    transition-duration: 150ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+/*
+  This @theme block is part of the Vercel/Next.js starter.
+  It's fine to leave it. It helps map variables for other
+  UI components.
+*/
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
